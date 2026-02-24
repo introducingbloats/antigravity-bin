@@ -1,3 +1,7 @@
+# TODO:
+# - Bash completions
+# - Desktop entry
+# - Only expose the binary, not the whole directory
 {
   lib,
   stdenv,
