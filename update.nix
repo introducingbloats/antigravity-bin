@@ -27,6 +27,15 @@ writeShellApplication {
     EXECUTION_ID=$(echo "$UPDATE_DATA" | jq -r '.[0].execution_id')
     echo "Latest version: $VERSION, execution ID: $EXECUTION_ID"
 
+    # Check version and execution ID against current version.json and skip if they match
+    CURRENT_VERSION=$(jq -r '.version' version.json)
+    CURRENT_EXECUTION_ID=$(jq -r '.execution_id' version.json)
+    echo "Flake version: $CURRENT_VERSION, execution ID: $CURRENT_EXECUTION_ID"
+    if [ "$VERSION" = "$CURRENT_VERSION" ] && [ "$EXECUTION_ID" = "$CURRENT_EXECUTION_ID" ]; then
+      echo "Version and execution ID match current version.json, skipping update"
+      exit 0
+    fi
+
     echo "Fetching x86_64-linux tarball and calculating hash"
     X64_TARBALL=${downloadUrl "linux-x64"}
     X64_SHA256=$(nix-prefetch-url --unpack "$X64_TARBALL")
