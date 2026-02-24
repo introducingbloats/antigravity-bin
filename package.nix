@@ -35,19 +35,19 @@
 let
   currentVersion = lib.importJSON ./version.json;
   downloadUrl =
-    platform: version:
-    "https://edgedl.me.gvt1.com/edgedl/release2/j0qc3/antigravity/stable/${version.version}-${version.execution_id}/${platform}/Antigravity.tar.gz";
-  sets =
+    platform:
+    "https://edgedl.me.gvt1.com/edgedl/release2/j0qc3/antigravity/stable/${currentVersion.version}-${currentVersion.execution_id}/${platform}/Antigravity.tar.gz";
+  defaultArgs =
     {
       "x86_64-linux" = {
         src = fetchzip {
-          url = downloadUrl "linux-x64" currentVersion;
+          url = downloadUrl "linux-x64";
           hash = currentVersion.hash-linux-x64;
         };
       };
       "aarch64-linux" = {
         src = fetchzip {
-          url = downloadUrl "linux-arm" currentVersion;
+          url = downloadUrl "linux-arm";
           hash = currentVersion.hash-linux-arm64;
         };
       };
@@ -58,7 +58,7 @@ in
 stdenv.mkDerivation (finalAttrs: {
   pname = "antigravity-bin";
   version = currentVersion.version;
-  inherit (sets) src;
+  inherit (defaultArgs) src;
 
   nativeBuildInputs = [
     autoPatchelfHook
