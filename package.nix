@@ -1,12 +1,11 @@
-# TODO:
-# - Bash completions
-# - Desktop entry
-# - Only expose the binary, not the whole directory
 {
   lib,
   stdenv,
   fetchzip,
   autoPatchelfHook,
+  copyDesktopItems,
+  makeDesktopItem,
+  makeWrapper,
 
   libgcc,
   glib,
@@ -62,6 +61,8 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     autoPatchelfHook
+    copyDesktopItems
+    makeWrapper
   ];
 
   buildInputs = [
@@ -96,14 +97,47 @@ stdenv.mkDerivation (finalAttrs: {
 
   installPhase = ''
     runHook preInstall
-    mkdir -p $out
-    cp -r * $out/
+
+    mkdir -p $out/lib/antigravity $out/bin
+    cp -r * $out/lib/antigravity/
+
+    # Expose only the main binary
+    makeWrapper $out/lib/antigravity/antigravity $out/bin/antigravity
+
+    # Install icon if present in the tarball
+    for size in 16 24 32 48 64 128 256 512; do
+      if [ -f "$out/lib/antigravity/resources/icons/''${size}x''${size}.png" ]; then
+        install -Dm644 "$out/lib/antigravity/resources/icons/''${size}x''${size}.png" \
+          "$out/share/icons/hicolor/''${size}x''${size}/apps/antigravity.png"
+      fi
+    done
+    # Fallback: try common icon locations
+    if [ -f "$out/lib/antigravity/resources/icon.png" ]; then
+      install -Dm644 "$out/lib/antigravity/resources/icon.png" \
+        "$out/share/icons/hicolor/256x256/apps/antigravity.png"
+    fi
+
+    runHook postInstall
   '';
 
+  desktopItems = [
+    (makeDesktopItem {
+      name = "antigravity";
+      desktopName = "Antigravity";
+      exec = "antigravity %U";
+      icon = "antigravity";
+      comment = "Antigravity by Google";
+      categories = [ "Utility" ];
+      startupWMClass = "Antigravity";
+    })
+  ];
+
   meta = {
+    description = "Antigravity by Google";
     homepage = "https://antigravity.google";
     license = lib.licenses.unfreeRedistributable;
     sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
     platforms = lib.platforms.linux;
+    mainProgram = "antigravity";
   };
 })
