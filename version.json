@@ -1,6 +1,6 @@
 {
-  "version": "1.20.5",
-  "execution_id": "5474622945755136",
-  "hash-linux-x64": "sha256-k+MG9o6N0e0e8rFNWWsIcf1zDNy28sV0B6gBq5vZ7Ng=",
-  "hash-linux-arm64": "sha256-s8p1qAO6MEQCSgd2MtqGdrYqSbmt+kOJYckGo7EZipg="
+  "version": "1.20.6",
+  "execution_id": "5891862175809536",
+  "hash-linux-x64": "sha256-3FH/TKpIDBaryj80w1mK4mxjMzF8Lwj8PAbPaaxDthA=",
+  "hash-linux-arm64": "sha256-gyEicl5F61BOuY7ckaZ7kUmUB8cBotddQjsByVWuBig="
 }
