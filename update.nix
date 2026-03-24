@@ -1,6 +1,5 @@
 {
   lib,
-  nix-prefetch-scripts,
   writeShellApplication,
   jq,
   coreutils,
@@ -15,7 +14,6 @@ writeShellApplication {
   name = "antigravity-bin-update";
   runtimeInputs = [
     jq
-    nix-prefetch-scripts
     coreutils
   ];
   text = ''
@@ -38,14 +36,12 @@ writeShellApplication {
 
     echo "Fetching x86_64-linux tarball and calculating hash"
     X64_TARBALL=${downloadUrl "linux-x64"}
-    X64_SHA256=$(nix-prefetch-url --unpack "$X64_TARBALL")
-    X64_HASH=$(nix-hash --to-sri --type sha256 "$X64_SHA256")
+    X64_HASH=$(nix store prefetch-file --json --unpack "$X64_TARBALL" | jq -r '.hash')
     echo "x86_64-linux hash: $X64_HASH"
 
     echo "Fetching aarch64-linux tarball and calculating hash"
     ARM64_TARBALL=${downloadUrl "linux-arm"}
-    ARM64_SHA256=$(nix-prefetch-url --unpack "$ARM64_TARBALL")
-    ARM64_HASH=$(nix-hash --to-sri --type sha256 "$ARM64_SHA256")
+    ARM64_HASH=$(nix store prefetch-file --json --unpack "$ARM64_TARBALL" | jq -r '.hash')
     echo "aarch64-linux hash: $ARM64_HASH"
 
     # Write the new version and hashes to version.json.tmp and then move it to version.json
