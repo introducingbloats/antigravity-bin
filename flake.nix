@@ -11,11 +11,12 @@
       packages = lib-nixpkgs.forSystems lib-nixpkgs.linuxOnly (
         { pkgs, ... }:
         let
-          package = pkgs.callPackage ./package.nix { };
+          packages = pkgs.callPackage ./package.nix { };
         in
         {
-          default = package;
-          antigravity-bin = package;
+          default = packages.antigravity-bin;
+          antigravity-bin = packages.antigravity-bin;
+          antigravity-cli = packages.antigravity-cli;
           updateScript = pkgs.callPackage ./update.nix { };
         }
       );
