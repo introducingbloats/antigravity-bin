@@ -3,9 +3,9 @@
   "execution_id": "6324554176528384",
   "hash-linux-x64": "sha256-FLyctIClvo+zt9w+Kwzr+mbTcK1YzB4PoBFA0SBNQpc=",
   "hash-linux-arm64": "sha256-Qt9fSfwg2p3weW5/aJENqGh/Awr1PY2ISgp/oiiFceA=",
-  "cli_version": "1.1.0",
-  "cli-url-linux-x64": "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.1.0-4523441756438528/linux-x64/cli_linux_x64.tar.gz",
-  "cli-url-linux-arm64": "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.1.0-4523441756438528/linux-arm/cli_linux_arm64.tar.gz",
-  "hash-cli-linux-x64": "sha256-fuUSRAr17QyBkGXNfMFO7JBpkhTfS+MigKw0bwEAV34=",
-  "hash-cli-linux-arm64": "sha256-I1UKWuNpFrJwLABqR8IaqG++OvGsRPV7Xb0/nexcfno="
+  "cli_version": "1.1.1",
+  "cli-url-linux-x64": "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.1.1-6269367663591424/linux-x64/cli_linux_x64.tar.gz",
+  "cli-url-linux-arm64": "https://storage.googleapis.com/antigravity-public/antigravity-cli/1.1.1-6269367663591424/linux-arm/cli_linux_arm64.tar.gz",
+  "hash-cli-linux-x64": "sha256-LuFnhBzcmh19xaYk8fFbhO5du5S4WvZipymRGMtLFYY=",
+  "hash-cli-linux-arm64": "sha256-P8VCaGxcgtegHjeWqL/Npe2EnG5w8H1NDJPlE2iVJ4Q="
 }
