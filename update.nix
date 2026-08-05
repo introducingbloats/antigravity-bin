@@ -8,8 +8,8 @@
 let
   constants = lib.importJSON ./constants.json;
   downloadUrl =
-    platform:
-    "https://storage.googleapis.com/antigravity-public/antigravity-hub/${currentVersion.version}-${currentVersion.execution_id}/${platform}/Antigravity.tar.gz";
+    platform: ver:
+    "https://storage.googleapis.com/antigravity-public/antigravity-hub/${ver.version}-${ver.execution_id}/${platform}/Antigravity.tar.gz";
   cliManifestUrl =
     platform:
     "https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/${platform}.json";
@@ -51,12 +51,12 @@ writeShellApplication {
 
     # Fetch and validate GUI hashes
     echo "Fetching x86_64-linux tarball and calculating hash"
-    X64_TARBALL=${downloadUrl "linux-x64"}
+    X64_TARBALL=${downloadUrl "linux-x64" { version = "$VERSION"; execution_id = "$EXECUTION_ID"; }}
     X64_HASH=$(nix store prefetch-file --json "$X64_TARBALL" | jq -r '.hash')
     echo "x86_64-linux hash: $X64_HASH"
 
     echo "Fetching aarch64-linux tarball and calculating hash"
-    ARM64_TARBALL=${downloadUrl "linux-arm"}
+    ARM64_TARBALL=${downloadUrl "linux-arm" { version = "$VERSION"; execution_id = "$EXECUTION_ID"; }}
     ARM64_HASH=$(nix store prefetch-file --json "$ARM64_TARBALL" | jq -r '.hash')
     echo "aarch64-linux hash: $ARM64_HASH"
 
